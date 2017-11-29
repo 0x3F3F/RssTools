@@ -1,0 +1,20 @@
+[
+  {
+    "site":"zerohedge",
+	"feedId":"8",
+    "default":"hide",
+    "filters":[	"druckenmiller" ,"tudor" ,"krieger" ,"collum" ,"kolanovic" ,"horseman" ,"hedge fund" ,"realvision ","grant williams" ,"raoul" ,"peters" ,"gold" ,"yusko" ,"northman","mauldin"]
+  },
+  {
+    "site":"JoRogan",
+	"feedId":"21",
+    "default":"show",
+    "filters":["est of" , "comedian", "UFC", "fight", "MMA"]
+  },
+  {
+    "site":"EpsilonTheory",
+	"feedId":"12",
+    "default":"show",
+    "filters":["see the data"]
+  }
+]

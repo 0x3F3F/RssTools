@@ -1,0 +1,8 @@
+{
+	"name": "Simple Article Filter",
+	"author": "Iain Benson",
+	"description": "Allows simple filtering of article feeds that contain certain words.  Filtering is details in the json file in the script directry",
+	"version": 0.1,
+	"entrypoint": "SimpleArticleFilter",
+	"type": "user"
+}
