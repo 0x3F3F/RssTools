@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+from SiteCrawler.feedexport import RssXmlItemExporter 
+from scrapy.utils.project import get_project_settings
+
+class SitecrawlerPipeline(object):
+
+	def __init__(self):
+		self.file = open("test2.xml","wb")	# Overwrites existing
+
+		self.exporter = RssXmlItemExporter(self.file)
+		# Think expects item_element, root_element, encoding, field_to_export, export_empty_fields, and indent
+		# Seen example where passed individually, but think it wants a dict.
+		# Poss get from 
+		settings = get_project_settings()
+		print(settings.get('USER_AGENT'))
+
+		# Useful to know how to tie signals to functions.  open/close_spider automatically setup
+		# dispatcher.connect(self.SpiderOpenFunc, signals.spider_opened)
+		# dispatcher.connect(self.SpiderCloseFunc, signals.spider_closed)
+
+	def open_spider(self, spider):
+		self.exporter.start_exporting_rss();
+
+	def close_spider(self, spider):
+		self.exporter.finish_exporting_rss();
+		self.file.close()
+
+	def process_item(self, item, spider):
+		spiderName = spider.settings.get('name')
+		print("IIIIIAAAAAIIIIIIINNNNNN")
+		print(spiderName)
+		self.exporter.export_item(item)
+		return item
+
