@@ -1,0 +1,2 @@
+output_feeds/*.rss
+**/__pycache__/*.py[cod]
