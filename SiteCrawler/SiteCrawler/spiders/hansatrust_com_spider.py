@@ -4,7 +4,7 @@ import datetime, time
 class HansaTrustSpider(scrapy.Spider):
 	name = "HansaTrust"
 	allowed_domains = ['https://www.hansatrust.com']
-	start_urls = ['http://www.hansatrust.com/shareholder-information/financial-and-investment-reporting/year-2017.aspx', ]
+	start_urls = ['http://www.hansatrust.com/shareholder-information/financial-and-investment-reporting', ]
 
 	# Custom settings that I can read in the pipeline & put in feed.
 	custom_settings = {}
@@ -12,6 +12,13 @@ class HansaTrustSpider(scrapy.Spider):
 	custom_settings['RSS_LINK'] = start_urls[0]
 	custom_settings['RSS_OUTPUT_FILE'] = name + '.rss'
  
+	def __init__(self):
+		"""Need to initialise start_url as has current year in it""" 	
+		now = datetime.datetime.now()
+		self.start_urls[0] += "/year-" + str(now.year) + ".aspx"
+		# Now call the original init function
+		scrapy.Spider.__init__(self)
+
 	def getPubDate(self):
 		"""Creates a RSS date/time"""
 		pubDate = datetime.date.today().strftime("%d %B %Y")

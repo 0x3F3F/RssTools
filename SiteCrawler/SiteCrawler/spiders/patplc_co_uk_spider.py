@@ -9,8 +9,8 @@ import datetime, time
 
 class PersonalAssetsSpider(scrapy.Spider):
 	name = "PersonalAssets"
-	#allowed_domains = ['https://patplc.co.uk']
-	start_urls = ['http://127.0.0.1/test.html', ]
+	allowed_domains = ['https://patplc.co.uk']
+	start_urls = ['https://patplc.co.uk//literature/quarterly-reports', ]
 
 	# Custom settings that I can read in the pipeline & put in feed.
 	custom_settings = {}
