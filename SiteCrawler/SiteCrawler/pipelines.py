@@ -23,7 +23,7 @@ class SitecrawlerPipeline(object):
 		exporterSettings['encoding'] = 'utf-8'
 		#exporterSettings['export_empty_fields'] = False 
 		#exporterSettings['item_element'] = 
-		#exporterSettings['root_element'] = 
+		exporterSettings['root_element'] = "channel" # default is items, rss 2.0 wants channel
 		
 		# Open the rss file for writing 
 		self.file = open(self.rss_output_file,"wb")	# Overwrites existing

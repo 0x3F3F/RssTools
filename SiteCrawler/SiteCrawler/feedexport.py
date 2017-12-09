@@ -1,4 +1,5 @@
 from scrapy.exporters import XmlItemExporter 
+import datetime
 
 # The default feedexporter is missing <rss> and <channel> tags from the xml
 # Looking at scrapy/exporters.py/XmlItemExporter it appeared clear where the tag should go
@@ -13,22 +14,21 @@ class RssXmlItemExporter(XmlItemExporter):
 	def start_exporting_rss(self, rss_title, rss_link):
 		"""
 		Adds opening tags, including channel and rss
-		Additionall adds a title and link to teh feed.
+		Additionall adds a title and link to the feed.
 		"""
 		self.xg.startDocument()
 
 		# IRB MYsuff
 		self.xg.startElement("rss", {'version':'2.0'})
 		self._beautify_newline(new_item=True)
-		self.xg.startElement("channel", {})
+		self.xg.startElement(self.root_element, {})
 		self._beautify_newline(new_item=True)
 		self._export_xml_field('title',rss_title,1)
 		self._export_xml_field('link',rss_link,1)
+		pubDate = datetime.date.today().strftime("%d %B %Y")
+		self._export_xml_field('pubDate',pubDate,1)
 		# End Mysuff
 		
-		self.xg.startElement(self.root_element, {})
-		self._beautify_newline(new_item=True)
-
 		#print(self.__dict__)
 
 
@@ -37,8 +37,6 @@ class RssXmlItemExporter(XmlItemExporter):
 		self.xg.endElement(self.root_element)
 
 		# IRB MYsuff
-		self._beautify_newline(new_item=True)
-		self.xg.endElement("channel")
 		self._beautify_newline(new_item=True)
 		self.xg.endElement("rss")
 		# End Mysuff
