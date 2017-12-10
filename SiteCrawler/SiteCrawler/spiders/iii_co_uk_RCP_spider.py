@@ -2,6 +2,7 @@ import scrapy
 import datetime, time
 import urllib
 import re
+import pprint
 
 # IMPORTANT:
 # Going to use one spider for each iii forum page, instead of combining into 1
@@ -49,6 +50,26 @@ class iiiRCPForumSpider(scrapy.Spider):
 		return title, link
 
 
+	def GetDescription(self, extractedDescs):
+		"""Fetch the description in desired form"""
+		if extractedDescs:
+			# Desc is list with muiltiple items.  Suspect <br> split these up instead of one
+			# Add p tags. Brs don't appear to work in feedreader for newlines, need to use <p>
+			descsWithTags = ["<p>"+ x +"</p>" for x in extractedDescs] 
+
+			# Create our description
+			description = "".join(descsWithTags)
+
+			# Tidy up the output.  Bit hacky, but hey.
+			description=description.replace("<p>\n</p>","" )
+			description=description.replace("\n","" )
+			description=description.replace("</p>","</p>\n" )
+		else:
+			description = "Failed to fetch description"
+
+		return description
+
+
 	def parse(self, response):
 		"""Select page elements to pick for the generated xml element"""
 
@@ -60,12 +81,8 @@ class iiiRCPForumSpider(scrapy.Spider):
 			extractedLinks = viewRow.css('div ul li a::attr("href")').extract()
 			title,link = self.GetTitleAndLink(extractedLinks)
 
-			# Desc is list with muiltiple items.  Suspect <br> split these up instead of one
 			extractedDescs =  viewRow.css('div div::text').extract()		
-			if extractedDescs:
-				desc = "".join(extractedDescs)
-			else:
-				desc = "Failed to fetch description"
+			desc = self.GetDescription(extractedDescs)
 
 			# I've set the order here in FEED_EXPORT_FIELDS cfg variable
 			yield {
