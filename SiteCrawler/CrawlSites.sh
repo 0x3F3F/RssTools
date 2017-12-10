@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Debug cron:
+#Redirects stdout/err to log
+#exec &>/home/pi/Dev/RssTools/SiteCrawler/SiteCrawlerCron.log
+#Shows command about to execute
+#set -x
+
+# Script failing from cron as scrapy not found, likely as bashrc not called. Following missing
+export PATH=$PATH:/usr/local/bin
+
 # cd into SiteCrawler project dir
 cd /home/pi/Dev/RssTools/SiteCrawler
 
@@ -10,7 +19,7 @@ cd /home/pi/Dev/RssTools/SiteCrawler
 # Spider: british-empire_co_uk_spider.py
 # Output: BritishEmpire.rss
 # Notes: Not used as 
-#scrapy crawl BritishEmpire
+#Scrapy crawl BritishEmpire
 
 # Spider: fincialexpressde_net_spider.py
 # Output: InvestmentTrustReps.rss
@@ -42,7 +51,7 @@ scrapy crawl Ruffer
 # Setup symlinks for desired feeds from web dir to feed output directory
 # Can then just add the feesd into local feedreader, pointing to localhost
 #
-# Run this on a cron
+# Run this on a cron. RUN AS USER, NOT ROOT: crontab -u pi -e
 ##########################################################################
 
 
