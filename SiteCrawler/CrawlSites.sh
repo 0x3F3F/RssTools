@@ -22,6 +22,11 @@ scrapy crawl InvestmentTrustReps
 # Notes: Not used as using financialexpress_net_spider.py instead 
 #scrapy crawl HansaTrust
 
+# Spider: iii_co_uk_RCP_spider.py
+# Output: HansaTrust.rss
+# Notes: Use diff spider for each forum.
+scrapy crawl iiiRCPForum
+
 # Spider: patplc_co_uk_spider.py
 # Output: PersonalAssets.rss
 # Notes: Not used as using financialexpress_net_spider.py instead 
