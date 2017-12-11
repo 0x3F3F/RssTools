@@ -8,7 +8,7 @@ import datetime, time
 
 
 class PersonalAssetsSpider(scrapy.Spider):
-	name = "PersonalAssets"
+	name = "patplc_co_uk"
 	allowed_domains = ['https://patplc.co.uk']
 	start_urls = ['https://patplc.co.uk//literature/quarterly-reports', ]
 
@@ -16,7 +16,7 @@ class PersonalAssetsSpider(scrapy.Spider):
 	custom_settings = {}
 	custom_settings['RSS_TITLE'] = 'Personal Assets Trust'
 	custom_settings['RSS_LINK'] = start_urls[0]
-	custom_settings['RSS_OUTPUT_FILE'] = 'PersonalAssets.rss'
+	custom_settings['RSS_OUTPUT_FILE'] = name + '.rss'
 
 	def getPubDate(self):
 		"""Creates a RSS date/time"""

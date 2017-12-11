@@ -6,7 +6,7 @@ from collections import namedtuple
 CssItems = namedtuple('CssItems', ['LoopCss', 'TitleCss', 'LinkCss'])
 
 class RufferSpider(scrapy.Spider):
-	name = "Ruffer"
+	name = "ruffer_co_uk"
 	allowed_domains = ['https://www.ruffer.co.uk']
 	start_urls = [ ] # setup later
 

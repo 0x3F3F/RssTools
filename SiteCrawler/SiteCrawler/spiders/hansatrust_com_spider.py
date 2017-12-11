@@ -2,7 +2,7 @@ import scrapy
 import datetime, time
 
 class HansaTrustSpider(scrapy.Spider):
-	name = "HansaTrust"
+	name = "hansatrust_com"
 	allowed_domains = ['https://www.hansatrust.com']
 	start_urls = ['http://www.hansatrust.com/shareholder-information/financial-and-investment-reporting', ]
 

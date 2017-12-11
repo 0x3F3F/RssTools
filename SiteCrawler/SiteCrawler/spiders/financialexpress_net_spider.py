@@ -5,7 +5,7 @@ import datetime, time
 # This uses the site that theaic.co.uk uses to get IT reports
 # Advantage is that everythin is in one place and I don't need to scrape multple sites
 class InvestmentTrustRepsSpider(scrapy.Spider):
-	name = "InvestmentTrustReps"
+	name = "financialexpress_net"
 	allowed_domains = ['http://webfund6.financialexpress.net']
 	start_urls = []
 
@@ -13,7 +13,7 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 	custom_settings = {}
 	custom_settings['RSS_TITLE'] = 'Investment Trust Reports'
 	custom_settings['RSS_LINK'] = 'http://www.theaic.co.uk'
-	custom_settings['RSS_OUTPUT_FILE'] = 'InvestmentTrustReps.rss'
+	custom_settings['RSS_OUTPUT_FILE'] = name + '.rss'
 
 	# Funds we're looking for.  Site needs ISIN code, but we'll display Ticker instead.
 	isinMappings = {

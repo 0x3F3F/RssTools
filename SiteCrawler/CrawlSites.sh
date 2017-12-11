@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Debug cron:
-#Redirects stdout/err to log
+# Redirects stdout/err to log
 #exec &>/home/pi/Dev/RssTools/SiteCrawler/SiteCrawlerCron.log
-#Shows command about to execute
+# Shows command about to execute
 #set -x
 
 # Script failing from cron as scrapy not found, likely as bashrc not called. Following missing
@@ -17,34 +17,34 @@ cd /home/pi/Dev/RssTools/SiteCrawler
 #################################################
 
 # Spider: british-empire_co_uk_spider.py
-# Output: BritishEmpire.rss
-# Notes: Not used as 
-#Scrapy crawl BritishEmpire
+# Output: british-empire_co_uk.rss
+# Status: Not used as using financialexpress_net_spider.py instead 
+#scrapy crawl british-empire_co_uk
 
 # Spider: fincialexpressde_net_spider.py
-# Output: InvestmentTrustReps.rss
-# Notes: Main Spider that fetches all IT Reports from theaic.so.uk data provider
-scrapy crawl InvestmentTrustReps
+# Output: fincialexpress_net.rss
+# Status: Main Spider that fetches all IT Reports from theaic.so.uk data provider
+scrapy crawl financialexpress_net
 
 # Spider: hansatrust_com_spider.py
-# Output: HansaTrust.rss
-# Notes: Not used as using financialexpress_net_spider.py instead 
-#scrapy crawl HansaTrust
+# Output: hansatrust_com.rss
+# Status: Not used as using financialexpress_net_spider.py instead 
+#scrapy crawl hansatrust_com
 
-# Spider: iii_co_uk_RCP_spider.py
-# Output: HansaTrust.rss
-# Notes: Use diff spider for each forum.
-scrapy crawl iiiRCPForum
+# Spider: iii_co_uk_XXX_spider.py
+# Output: iii_co_uk_XXX.rss
+# Status: Use diff spider for each forum.
+scrapy crawl iii_co_uk_RCP
 
 # Spider: patplc_co_uk_spider.py
-# Output: PersonalAssets.rss
-# Notes: Not used as using financialexpress_net_spider.py instead 
-#scrapy crawl PersonalAssets
+# Output: patplc_co_uk.rss
+# Status: Not used as using financialexpress_net_spider.py instead 
+#scrapy crawl patplc_co_uk
 
 # Spider: ruffer_co_uk_spider.py
-# Output: Ruffer.rss
-# Notes:Only used for Ruffer Comment.  Monthly/Annual reprots from finanicalExpress_new_spider.py
-scrapy crawl Ruffer
+# Output: ruffer_co_uk.rss
+# Status:Only used for Ruffer Comment.  Monthly/Annual reprots from finanicalExpress_new_spider.py
+scrapy crawl ruffer_co_uk
 
 #########################################################################
 # Note:

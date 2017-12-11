@@ -9,7 +9,7 @@ import pprint
 # Each page has 40 entries and so teh feed reader ill have to remember at least that many items.
 # FreshRss was set to 60 or so, so would hit problems if have multiple forum pages in one spider
 class iiiRCPForumSpider(scrapy.Spider):
-	name = "iiiRCPForum"
+	name = "iii_co_uk_RCP"
 	allowed_domains = ['http://www.iii.co.uk']
 	start_urls = [
 			'http://www.iii.co.uk/investment/detail?code=cotn:RCP.L&display=discussion'
@@ -19,7 +19,7 @@ class iiiRCPForumSpider(scrapy.Spider):
 	custom_settings = {}
 	custom_settings['RSS_TITLE'] = 'III RCP Forum'
 	custom_settings['RSS_LINK'] = 'http://www.iii.co.uk'
-	custom_settings['RSS_OUTPUT_FILE'] = 'iiiRCPForum.rss'
+	custom_settings['RSS_OUTPUT_FILE'] = name + '.rss'
 
 
 	def getPubDate(self):

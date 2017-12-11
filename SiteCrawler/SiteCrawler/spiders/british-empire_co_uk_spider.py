@@ -3,7 +3,7 @@ import datetime, time
 
 # TODO: Add in processing for Annual Reports
 class BritishEmpireSpider(scrapy.Spider):
-	name = "BritishEmpire"
+	name = "british-empire_co_uk"
 	allowed_domains = ['https://www.british-empire.co.uk']
 	start_urls = ['https://www.british-empire.co.uk/commentary-updates/monthly-newsletters', ]
 
