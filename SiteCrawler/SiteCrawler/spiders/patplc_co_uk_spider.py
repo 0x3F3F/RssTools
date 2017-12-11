@@ -39,13 +39,11 @@ class PersonalAssetsSpider(scrapy.Spider):
 			# I've set the order here in FEED_EXPORT_FIELDS cfg variable
 			title = viewRow.css('a::attr("title")').extract_first()		
 			link = viewRow.css('a::attr("href")').extract_first()
-			pubDateTime = self.getPubDate()
 
 			yield {
 			'title': title,
 			'link': link,
 			'guid' : link,
-			'pubDate' : pubDateTime,
 			'description': "Personal Assets "+title,
 			}
 		

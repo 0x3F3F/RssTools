@@ -34,13 +34,11 @@ class HansaTrustSpider(scrapy.Spider):
 			# I've set the order here in FEED_EXPORT_FIELDS cfg variable
 			title = viewRow.css('a div.trust-icon::text').extract_first()		
 			link = self.allowed_domains[0] + viewRow.css('a::attr("href")').extract_first()
-			pubDateTime = self.getPubDate()
 
 			yield {
 			'title': title,
 			'link': link,
 			'guid' : link,
-			'pubDate' : pubDateTime,
 			'description': self.name  + " " + title,
 			}
 		

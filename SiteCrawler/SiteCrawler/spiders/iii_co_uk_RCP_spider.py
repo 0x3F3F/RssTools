@@ -73,7 +73,6 @@ class iiiRCPForumSpider(scrapy.Spider):
 	def parse(self, response):
 		"""Select page elements to pick for the generated xml element"""
 
-		pubDateTime = self.getPubDate()
 
 		for viewRow in response.css('tr td.content.comment'):
 
@@ -89,7 +88,6 @@ class iiiRCPForumSpider(scrapy.Spider):
 			'title': title,
 			'link': link,
 			'guid' : link,
-			'pubDate' : pubDateTime,
 			'description': desc,
 			}
 

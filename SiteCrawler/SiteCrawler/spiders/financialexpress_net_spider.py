@@ -80,8 +80,6 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 
 		for viewRow in response.css('tr'):
 
-			pubDateTime = self.getPubDate()
-
 			# Extract our params.  Note couild be None if fails.
 			extractedTitle =  viewRow.css('a::text').extract_first()		
 			extractedLink = viewRow.css('a::attr("href")').extract_first()
@@ -94,7 +92,6 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 			'title': title,
 			'link': link,
 			'guid' : link,
-			'pubDate' : pubDateTime,
 			'description': title,
 			}
 
