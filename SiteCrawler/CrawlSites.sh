@@ -31,10 +31,14 @@ scrapy crawl financialexpress_net
 # Status: Not used as using financialexpress_net_spider.py instead 
 #scrapy crawl hansatrust_com
 
-# Spider: iii_co_uk_XXX_spider.py
+# Spider: iii_co_uk_spider.py
 # Output: iii_co_uk_XXX.rss
-# Status: Use diff spider for each forum.
+# Status: Use diff spider for each forum. All defined in same file.
 scrapy crawl iii_co_uk_RCP
+scrapy crawl iii_co_uk_CLDN
+scrapy crawl iii_co_uk_BTEM
+scrapy crawl iii_co_uk_CGT
+scrapy crawl iii_co_uk_PNL
 
 # Spider: patplc_co_uk_spider.py
 # Output: patplc_co_uk.rss
