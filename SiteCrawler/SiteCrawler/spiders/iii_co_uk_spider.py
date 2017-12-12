@@ -3,13 +3,56 @@ import datetime, time
 import urllib
 import re
 
+# Descriptor: How pythons proprty type implemented ie get / set methods
+class GetSpiderNameFromClassName:
+	def __get__(self, instance, owner):
+		"""
+		Generate the spider name from the classname. Classes expected to have format _TICKR
+		This TICKR is extracted and used to create the correct spider name
+		"""
+		className = owner.__name__
+		tickerIndex = className.rfind("_") + 1
+		return('iii_co_uk_' + className[tickerIndex:])
+
+
+class GetStartUrlFromClassName:
+	def __get__(self, instance, owner):
+		"""
+		Generate the iii start url from the classname. Classes expected to have format _TICKR
+		This TICKR is extracted and used to create the correct start url for the forum in quesiton
+		"""
+		className = owner.__name__
+		tickerIndex = className.rfind("_") + 1
+		start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+className[tickerIndex:]+'.L&display=discussion'	]
+		return start_urls
+
+
+class GetCustomSettingsFromClassName:
+	def __get__(self, instance, owner):
+		"""
+		Generate the scrapy custom settings  from the classname. Classes expected to have format _TICKR
+		This TICKR is extracted and used to create the required custom setting values.
+		"""
+		className = owner.__name__
+		tickerIndex = className.rfind("_") + 1
+		ticker = className[tickerIndex:]
+
+		custom_settings = {}
+		custom_settings['RSS_TITLE'] = 'III Forum: '+ ticker
+		custom_settings['RSS_LINK'] = 'http://www.iii.co.uk/investment/detail?code=cotn:'+ ticker +'.L&display=discussion'	
+		custom_settings['RSS_OUTPUT_FILE'] = 'iii_co_uk_' + ticker + '.rss'
+		return custom_settings
+
+
+
 ################################################################################
 #
 # Class:	iiiForumSpider
 #
 # Method:	Each iii spider should be derived from this parent class.
-#			Derived classes inherit methods, not attributes which need to be set
-#			scrapy wants some atributes set right at start eg name not in init
+#			Derived classes inherit methods
+#			Attributes scrapy requires are set with getters which reply on derived 
+#			classes being named with an ending of _TICKER
 #
 # Note:		Going to use one spider for each iii forum page, instead of combining 
 #			into 1 as each page has 40 entries and so the feed reader will have to 
@@ -17,16 +60,17 @@ import re
 #
 ################################################################################
 class iiiForumSpider(scrapy.Spider):
-	# Srapy wants these defined
-	name = ""	
-	allowed_domains = ['']
-	start_urls = ['']
 
-	# Classes derived from this need to set these
-	custom_settings = {}
-	custom_settings['RSS_TITLE'] = ''
-	custom_settings['RSS_LINK'] = ''
-	custom_settings['RSS_OUTPUT_FILE'] = ''
+	# Srapy wants these defined
+	# Use descriptors (getter) so as can populate based on Class Name, expected to end with _TICKER
+	# Derived classes will inherit and so won't need additional config providing named correctly.
+	name = GetSpiderNameFromClassName()
+	start_urls = GetStartUrlFromClassName()
+	allowed_domains = ['http://www.iii.co.uk']
+
+	# Custom settings that I can read in the pipeline & put in feed.
+	# Again, use descriptor so as can populate based on derived Class Name. 
+	custom_settings = GetCustomSettingsFromClassName()
 
 	def getPubDate(self):
 		"""Creates a RSS date/time"""
@@ -97,104 +141,43 @@ class iiiForumSpider(scrapy.Spider):
 			'description': desc,
 			}
 
+
+
+
 # Caledonia Investment Trust Spider
 class iiiForumSpider_CLDN(iiiForumSpider):
-
-	# Need only change this
-	tikr = 'CLDN'
-
-	# Scrapy needs these defined here otherwise cant find spider
-	# Tried in init fn via common code but didn't work.  Bugger.
-	name ="iii_co_uk_" + tikr
-	allowed_domains = ['http://www.iii.co.uk']
-	start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+tikr+'.L&display=discussion'	]
-
-	# Custom settings that I can read in the pipeline & put in feed.
-	custom_settings = {
-				'RSS_TITLE':'III Forum: '+tikr,
-				'RSS_LINK':start_urls[0],
-				'RSS_OUTPUT_FILE':name +'.rss'
-			}
+	# pass as nothing to do.
+	# Required attributes set via inherited getters which rely on class name ending _CLDN
+	pass
 
 
 # Capital Gearing Investment Trust Spider
 class iiiForumSpider_CGT(iiiForumSpider):
+	# pass as nothing to do.
+	# Required attributes set via inherited getters which rely on class name ending _CGT
+	pass
 
-	# Need only change this
-	tikr = 'CGT'
-
-	# Scrapy needs these defined here otherwise cant find spider
-	# Tried in init fn via common code but didn't work.  Bugger.
-	name ="iii_co_uk_" + tikr
-	allowed_domains = ['http://www.iii.co.uk']
-	start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+tikr+'.L&display=discussion'	]
-
-	# Custom settings that I can read in the pipeline & put in feed.
-	custom_settings = {
-				'RSS_TITLE':'III Forum: '+tikr,
-				'RSS_LINK':'http://www.iii.co.uk',
-				'RSS_OUTPUT_FILE':name +'.rss'
-			}
 
 
 #  RIT Capital Partners Spider
 class iiiForumSpider_RCP(iiiForumSpider):
+	# pass as nothing to do.
+	# Required attributes set via inherited getters which rely on class name ending _RCP
+	pass
 
-	# Need only change this
-	tikr = 'RCP'
-
-	# Scrapy needs these defined here otherwise cant find spider
-	# Tried in init fn via common code but didn't work.  Bugger.
-	name ="iii_co_uk_" + tikr
-	allowed_domains = ['http://www.iii.co.uk']
-	start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+tikr+'.L&display=discussion'	]
-
-	# Custom settings that I can read in the pipeline & put in feed.
-	custom_settings = {
-				'RSS_TITLE':'III Forum: '+tikr,
-				'RSS_LINK':'http://www.iii.co.uk',
-				'RSS_OUTPUT_FILE':name +'.rss'
-			}
 
 
 # Personal Assets Trust Spider
 class iiiForumSpider_PNL(iiiForumSpider):
-
-	# Need only change this
-	tikr = 'PNL'
-
-	# Scrapy needs these defined here otherwise cant find spider
-	# Tried in init fn via common code but didn't work.  Bugger.
-	name ="iii_co_uk_" + tikr
-	allowed_domains = ['http://www.iii.co.uk']
-	start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+tikr+'.L&display=discussion'	]
-
-	# Custom settings that I can read in the pipeline & put in feed.
-	custom_settings = {
-				'RSS_TITLE':'III Forum: '+tikr,
-				'RSS_LINK':'http://www.iii.co.uk',
-				'RSS_OUTPUT_FILE':name +'.rss'
-			}
+	# pass as nothing to do.
+	# Required attributes set via inherited getters which rely on class name ending _PNL
+	pass
 
 
 
 # British Empire Trust Spider
 class iiiForumSpider_BTEM(iiiForumSpider):
-
-	# Need only change this
-	tikr = 'BTEM'
-
-	# Scrapy needs these defined here otherwise cant find spider
-	# Tried in init fn via common code but didn't work.  Bugger.
-	name ="iii_co_uk_" + tikr
-	allowed_domains = ['http://www.iii.co.uk']
-	start_urls = ['http://www.iii.co.uk/investment/detail?code=cotn:'+tikr+'.L&display=discussion'	]
-
-	# Custom settings that I can read in the pipeline & put in feed.
-	custom_settings = {
-				'RSS_TITLE':'III Forum: '+tikr,
-				'RSS_LINK':'http://www.iii.co.uk',
-				'RSS_OUTPUT_FILE':name +'.rss'
-			}
-
+	# pass as nothing to do.
+	# Required attributes set via inherited getters which rely on class name ending _BTEM
+	pass
 
