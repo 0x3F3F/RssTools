@@ -1,4 +1,5 @@
 import scrapy
+import subprocess
 import datetime, time
 
 
@@ -56,6 +57,18 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 
 
 
+	def getRedirectUrl(self, sourceUrl):
+		"""
+		The LatestReport url uses a redirect and changes every day
+		Useless for guid.  Get the actual url
+		"""
+		#Use curl as can just fetch headers
+		# I=just headers, s=silent,F=follow redirect
+		destUrl = subprocess.check_output(['curl','-LsI','-o','/dev/null','-w','%{url_effective}',sourceUrl])
+		return destUrl
+
+
+
 	def GetCleanTitleLink(self, response, extractedTitle, extractedLink ):
 		"""Checks titl/link for scrape error (None), adds in Info to title"""
 
@@ -87,11 +100,18 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 			# Tydy up extracted params, check for failures etc
 			title, link = self.GetCleanTitleLink( response, extractedTitle, extractedLink )
 
+			if "Factsheet" in title:
+				# Factsheets use redirects and it changes every day. get permanentlink for guid
+				permUrl = self.getRedirectUrl(link)
+			else:
+				# Annual reps use permanent links
+				permUrl = link
+
 			# I've set the order here in FEED_EXPORT_FIELDS cfg variable
 			yield {
 			'title': title,
 			'link': link,
-			'guid' : link,
+			'guid' : permUrl,
 			'description': title,
 			}
 
