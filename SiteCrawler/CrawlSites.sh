@@ -26,6 +26,11 @@ cd /home/pi/Dev/RssTools/SiteCrawler
 # Status: Main Spider that fetches all IT Reports from theaic.so.uk data provider
 scrapy crawl financialexpress_net
 
+# Spider: gmo_com_spider.py
+# Output: gmo_com.rss
+# Status: In use.
+scrapy crawl gmo_com
+
 # Spider: hansatrust_com_spider.py
 # Output: hansatrust_com.rss
 # Status: Not used as using financialexpress_net_spider.py instead 
