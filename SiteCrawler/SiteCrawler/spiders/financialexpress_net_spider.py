@@ -24,8 +24,8 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 			'GB0001738615':'CGT',
 			'GB0007879835':'HANA',
 			'GB0001335081':'BTEM',
-			'GB0001216000':'CLDN',
-			'GB0001639920':'HAST',
+			'GB0001216000':'HAST',
+			'GB0001639920':'CLDN',
 			'GB0007836132':'SST',
 			'GB0000100767':'AAS',
 			'GB00B3SXM832':'BRFI',
@@ -64,7 +64,8 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 		"""
 		#Use curl as can just fetch headers
 		# I=just headers, s=silent,F=follow redirect
-		destUrl = subprocess.check_output(['curl','-LsI','-o','/dev/null','-w','%{url_effective}',sourceUrl])
+		byteUrl = subprocess.check_output(['curl','-LsI','-o','/dev/null','-w','%{url_effective}',sourceUrl])
+		destUrl = byteUrl.decode("utf-8")
 		return destUrl
 
 
@@ -110,7 +111,7 @@ class InvestmentTrustRepsSpider(scrapy.Spider):
 			# I've set the order here in FEED_EXPORT_FIELDS cfg variable
 			yield {
 			'title': title,
-			'link': link,
+			'link': permUrl,
 			'guid' : permUrl,
 			'description': title,
 			}
